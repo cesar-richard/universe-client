@@ -2,13 +2,13 @@ import React, { useState, useRef } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
-import WS from "react-native-websocket";
 import Lights from "../components/Lights";
+import StatusBar from "../components/StatusBar";
+import WS from "react-native-websocket";
 
 import { MonoText } from "../components/StyledText";
 
 export default function HomeScreen() {
-  const [uptime, setUptime] = useState("Offline");
   const [btnRed, setBtnRed] = useState("off");
   const [btnBlue, setBtnBlue] = useState("off");
   const [btnGreen, setBtnGreen] = useState("off");
@@ -28,12 +28,6 @@ export default function HomeScreen() {
         onMessage={event => {
           const data = JSON.parse(event.data);
           switch (data.event) {
-            case "heartbeat":
-              const time = Math.floor(data.time / 1000);
-              /*setUptime(
-                "Uptime : " + Math.floor(time / 60) + "min " + (time % 60) + "s"
-              );*/
-              break;
             case "button":
               switch (data.sensor) {
                 case "red":
@@ -58,6 +52,7 @@ export default function HomeScreen() {
                   console.warn("Unknown sensor", data.sensor);
               }
               break;
+            case "heartbeat":
             case "ask":
             case "answer":
               break;
@@ -220,9 +215,7 @@ export default function HomeScreen() {
         </View>
         <Lights />
       </ScrollView>
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>{uptime}</Text>
-      </View>
+      <StatusBar />
     </View>
   );
 }

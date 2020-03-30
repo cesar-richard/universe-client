@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, Button } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
 import Lights from "../components/Lights";
 import StatusBar from "../components/StatusBar";
+import Buttons from "../components/Buttons";
 import WS from "react-native-websocket";
 
 import { MonoText } from "../components/StyledText";
@@ -211,6 +212,7 @@ export default function HomeScreen() {
                 </Text>
               </View>
             </View>
+            <Buttons />
           </View>
         </View>
         <Lights />

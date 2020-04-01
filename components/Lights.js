@@ -9,7 +9,7 @@ export default function Lights() {
   const [lights, setLights] = useState([]);
   const [toRender, setToRender] = useState([]);
   useEffect(() => {
-    let socket = new WebSocket("ws://192.168.1.6:3000");
+    let socket = new WebSocket("ws://192.168.1.29:3000");
     socket.onopen = () => {
       socket.send(
         JSON.stringify({ event: "ask", sensor: "universe", state: "lights" })
@@ -24,7 +24,7 @@ export default function Lights() {
     };
     socket.onclose = () => {
       console.log("disconnected");
-      //socket = new WebSocket("ws://192.168.1.6:3000");
+      //socket = new WebSocket("ws://192.168.1.29:3000");
     };
   }, []);
   useEffect(() => {

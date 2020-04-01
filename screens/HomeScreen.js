@@ -21,7 +21,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <WS
         ref={wsRef}
-        url="ws://192.168.1.6:3000"
+        url="ws://192.168.1.29:3000"
         onOpen={() => {
           console.log("Open!");
           //            this.ws.send("Hello");

@@ -4,7 +4,7 @@ import { View, Button } from "react-native";
 export default function Buttons(props) {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
-    let s = new WebSocket("ws://192.168.1.6:3000");
+    let s = new WebSocket("ws://192.168.1.29:3000");
     s.onopen = () => {
       s.send(
         JSON.stringify({ event: "ask", sensor: "universe", state: "lights" })
@@ -12,7 +12,7 @@ export default function Buttons(props) {
     };
     s.onclose = () => {
       console.log("disconnected");
-      //socket = new WebSocket("ws://192.168.1.6:3000");
+      //socket = new WebSocket("ws://192.168.1.29:3000");
     };
     setSocket(s);
   }, []);

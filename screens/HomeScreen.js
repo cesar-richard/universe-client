@@ -24,7 +24,6 @@ export default function HomeScreen() {
         url="ws://192.168.1.29:3000"
         onOpen={() => {
           console.log("Open!");
-          //            this.ws.send("Hello");
         }}
         onMessage={event => {
           const data = JSON.parse(event.data);

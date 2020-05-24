@@ -39,7 +39,7 @@ export default function() {
         reconnect
       />
       {uptimes.map(e => (
-        <Text style={styles.tabBarInfoText}>
+        <Text style={styles.tabBarInfoText} key={e.name}>
           {e.name}:{e.time}
         </Text>
       ))}

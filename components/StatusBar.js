@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import WS from "react-native-websocket";
 export default function() {
-  const [uptime, setUptime] = useState("Offline");
+  const [uptimes, setUptimes] = useState([]);
   const wsRef = useRef(null);
 
   return (
@@ -16,9 +16,15 @@ export default function() {
           switch (data.event) {
             case "heartbeat":
               const time = Math.floor(data.time / 1000);
-              setUptime(
-                "Uptime : " + Math.floor(time / 60) + "min " + (time % 60) + "s"
-              );
+              setUptimes([
+                {
+                  name: data.macAddress,
+                  time: Math.floor(time / 60) + "min " + (time % 60) + "s"
+                },
+                ...uptimes.filter(({ name }) => {
+                  return name !== data.macAddress;
+                })
+              ]);
               break;
             case "button":
             case "ask":
@@ -32,7 +38,11 @@ export default function() {
         onClose={console.log}
         reconnect
       />
-      <Text style={styles.tabBarInfoText}>{uptime}</Text>
+      {uptimes.map(e => (
+        <Text style={styles.tabBarInfoText}>
+          {e.name}:{e.time}
+        </Text>
+      ))}
     </View>
   );
 }

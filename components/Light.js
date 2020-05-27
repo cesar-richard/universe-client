@@ -2,14 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
-import WS from "react-native-websocket";
+import { useSocketIO } from "react-use-websocket";
+import SocketConfig from "../constants/SocketsConfig";
 
 export default function Light(props) {
   const {
-    datas: {
-      name,
-      state: { on, bri }
-    }
+    name,
+    state: { on, bri }
   } = props;
   return (
     <View style={{ flex: 1, alignSelf: "stretch", flexDirection: "row" }}>

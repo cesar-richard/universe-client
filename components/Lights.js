@@ -2,35 +2,44 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
-import WS from "react-native-websocket";
+import { useSocketIO } from "react-use-websocket";
+import SocketConfig from "../constants/SocketsConfig";
 import Light from "./Light";
 
 export default function Lights() {
   const [lights, setLights] = useState([]);
   const [toRender, setToRender] = useState([]);
-  useEffect(() => {
-    let socket = new WebSocket("ws://192.168.1.29:3000");
-    socket.onopen = () => {
-      socket.send(
-        JSON.stringify({ event: "ask", sensor: "universe", state: "lights" })
-      );
-    };
-    socket.onmessage = event => {
+
+  const {
+    sendJsonMessage,
+    lastJsonMessage,
+    readyState,
+    getWebSocket
+  } = useSocketIO(SocketConfig.url, {
+    onOpen: () => console.log("opened Lights"),
+    share: () => true,
+    shouldReconnect: closeEvent => true,
+    onError: e => console.error,
+    onClose: e => console.log,
+    onMessage: event => {
       const data = JSON.parse(event.data);
       if (data.event == "answer" && data.sensor == "lights") {
-        console.log(event.data);
-        setLights(JSON.parse(data.state));
+        console.log(data.state);
+        setLights(data.state);
       }
-    };
-    socket.onclose = () => {
-      console.log("disconnected");
-      //socket = new WebSocket("ws://192.168.1.29:3000");
-    };
-  }, []);
+    }
+  });
+
+  useEffect(
+    () =>
+      sendJsonMessage({ event: "ask", sensor: "universe", state: "lights" }),
+    []
+  );
+
   useEffect(() => {
     const tmp = [];
-    Object.entries(lights).map(l => {
-      tmp.push(<Light key={l[0]} datas={l[1]} />);
+    lights.map(l => {
+      tmp.push(<Light key={l.id} name={l.nalme} state={l.state} />);
     });
     setToRender(tmp);
   }, [lights]);

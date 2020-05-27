@@ -1,43 +1,48 @@
 import React, { useRef, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import WS from "react-native-websocket";
+import { useSocketIO } from "react-use-websocket";
+import SocketConfig from "../constants/SocketsConfig";
+
 export default function() {
   const [uptimes, setUptimes] = useState([]);
-  const wsRef = useRef(null);
+  const {
+    sendJsonMessage,
+    lastJsonMessage,
+    readyState,
+    getWebSocket
+  } = useSocketIO(SocketConfig.url, {
+    onOpen: () => console.log("opened StatusBar"),
+    shouldReconnect: closeEvent => true,
+    share: () => true,
+    onError: e => console.error,
+    onClose: e => console.log,
+    onMessage: event => {
+      const data = JSON.parse(event.data);
+      switch (data.event) {
+        case "heartbeat":
+          const time = Math.floor(data.time / 1000);
+          setUptimes([
+            {
+              name: data.macAddress,
+              time: Math.floor(time / 60) + "min " + (time % 60) + "s"
+            },
+            ...uptimes.filter(({ name }) => {
+              return name !== data.macAddress;
+            })
+          ]);
+          break;
+        case "button":
+        case "ask":
+        case "answer":
+          break;
+        default:
+          console.warn("Unknown event", data.event);
+      }
+    }
+  });
 
   return (
     <View style={styles.tabBarInfoContainer}>
-      <WS
-        ref={wsRef}
-        url="ws://192.168.1.29:3000"
-        onOpen={() => {}}
-        onMessage={event => {
-          const data = JSON.parse(event.data);
-          switch (data.event) {
-            case "heartbeat":
-              const time = Math.floor(data.time / 1000);
-              setUptimes([
-                {
-                  name: data.macAddress,
-                  time: Math.floor(time / 60) + "min " + (time % 60) + "s"
-                },
-                ...uptimes.filter(({ name }) => {
-                  return name !== data.macAddress;
-                })
-              ]);
-              break;
-            case "button":
-            case "ask":
-            case "answer":
-              break;
-            default:
-              console.warn("Unknown event", data.event);
-          }
-        }}
-        onError={console.log}
-        onClose={console.log}
-        reconnect
-      />
       {uptimes.map(e => (
         <Text style={styles.tabBarInfoText} key={e.name}>
           {e.name}:{e.time}

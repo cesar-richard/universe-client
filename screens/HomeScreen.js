@@ -5,8 +5,8 @@ import * as WebBrowser from "expo-web-browser";
 import Lights from "../components/Lights";
 import StatusBar from "../components/StatusBar";
 import Buttons from "../components/Buttons";
-import WS from "react-native-websocket";
-
+import { useSocketIO } from "react-use-websocket";
+import SocketConfig from "../constants/SocketsConfig";
 import { MonoText } from "../components/StyledText";
 
 export default function HomeScreen() {
@@ -16,54 +16,55 @@ export default function HomeScreen() {
   const [btnWhite, setBtnWhite] = useState("off");
   const [btnBlack, setBtnBlack] = useState("off");
   const [btnYellow, setBtnYellow] = useState("off");
-  const wsRef = useRef(null);
-  return (
-    <View style={styles.container}>
-      <WS
-        ref={wsRef}
-        url="ws://192.168.1.29:3000"
-        onOpen={() => {
-          console.log("Open!");
-        }}
-        onMessage={event => {
-          const data = JSON.parse(event.data);
-          switch (data.event) {
-            case "button":
-              switch (data.sensor) {
-                case "red":
-                  setBtnRed(data.state);
-                  break;
-                case "blue":
-                  setBtnBlue(data.state);
-                  break;
-                case "green":
-                  setBtnGreen(data.state);
-                  break;
-                case "black":
-                  setBtnBlack(data.state);
-                  break;
-                case "white":
-                  setBtnWhite(data.state);
-                  break;
-                case "yellow":
-                  setBtnYellow(data.state);
-                  break;
-                default:
-                  console.warn("Unknown sensor", data.sensor);
-              }
+  const {
+    sendJsonMessage,
+    lastJsonMessage,
+    readyState,
+    getWebSocket
+  } = useSocketIO(SocketConfig.url, {
+    onOpen: () => console.log("opened HomeScreen"),
+    share: () => true,
+    shouldReconnect: closeEvent => true,
+    onError: e => console.error,
+    onClose: e => console.log,
+    onMessage: event => {
+      const data = JSON.parse(event.data);
+      switch (data.event) {
+        case "button":
+          switch (data.sensor) {
+            case "red":
+              setBtnRed(data.state);
               break;
-            case "heartbeat":
-            case "ask":
-            case "answer":
+            case "blue":
+              setBtnBlue(data.state);
+              break;
+            case "green":
+              setBtnGreen(data.state);
+              break;
+            case "black":
+              setBtnBlack(data.state);
+              break;
+            case "white":
+              setBtnWhite(data.state);
+              break;
+            case "yellow":
+              setBtnYellow(data.state);
               break;
             default:
-              console.warn("Unknown event", data.event);
+              console.warn("Unknown sensor", data.sensor);
           }
-        }}
-        onError={console.log}
-        onClose={console.log}
-        reconnect
-      />
+          break;
+        case "heartbeat":
+        case "ask":
+        case "answer":
+          break;
+        default:
+          console.warn("Unknown event", data.event);
+      }
+    }
+  });
+  return (
+    <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}

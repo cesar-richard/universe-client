@@ -1,12 +1,17 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "homepage": "http://crichard.fr/universe",
+  "homepage-gh": "https://cesar-richard.github.io/universe-client",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "deploy": "cd /Users/cesar/git/perso/universe/web-build && rsync -avhPR . root@crichard.fr:/var/www/universe/",
+    "deploy-gh": "gh-pages -d web-build",
+    "predeploy": "expo build:web --no-pwa"
   },
   "jest": {
     "preset": "jest-expo"

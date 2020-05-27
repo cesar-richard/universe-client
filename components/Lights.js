@@ -24,7 +24,6 @@ export default function Lights() {
     onMessage: event => {
       const data = JSON.parse(event.data);
       if (data.event == "answer" && data.sensor == "lights") {
-        console.log(data.state);
         setLights(data.state);
       }
     }

@@ -4,17 +4,17 @@ import SocketConfig from "../constants/SocketsConfig";
 import { useSocketIO } from "react-use-websocket";
 
 export default function MyButton(props) {
-  const [btnState, setBtnState] = useState("off");
+  const [relayState, setRelayState] = useState("off");
   const { sendJsonMessage, readyState } = useSocketIO(SocketConfig.url, {
-    onOpen: () => console.log("opened " + props.name + " button"),
+    onOpen: () => console.log("opened " + props.name + " relay"),
     share: () => true,
     shouldReconnect: closeEvent => true,
     onError: e => console.error,
     onClose: e => console.log,
     onMessage: e => {
-      const { event, sensor, state } = JSON.parse(e.data);
-      if ("button" === event && props.sensor === sensor) {
-        setBtnState(state);
+      const { event, relay, state } = JSON.parse(e.data);
+      if ("relay" === event && props.relay === relay) {
+        setRelayState(state);
       }
     }
   });
@@ -25,32 +25,25 @@ export default function MyButton(props) {
         alignSelf: "stretch"
       }}
     >
-      <Text style={{ backgroundColor: props.color, textAlign: "center" }}>
-        {props.name}
-      </Text>
+      <Text style={{ textAlign: "center" }}>{props.name}</Text>
       <Text
         style={{
           fontSize: 17,
           lineHeight: 24,
           textAlign: "center",
-          backgroundColor: btnState === "on" ? "green" : "red"
+          backgroundColor: relayState === "on" ? "green" : "red"
         }}
       >
-        {btnState}
+        {relayState}
       </Text>
       <Button
         title="Push"
         onPress={() => {
           sendJsonMessage({
-            event: "button",
-            sensor: props.sensor,
-            state: "on",
-            time: Date.now()
-          });
-          sendJsonMessage({
-            event: "button",
-            sensor: props.sensor,
-            state: "off",
+            action: "relay",
+            relay: props.relay,
+            on: relayState === "on" ? false : true,
+            target: props.target,
             time: Date.now()
           });
         }}

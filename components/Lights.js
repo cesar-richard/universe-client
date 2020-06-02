@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
@@ -38,7 +38,7 @@ export default function Lights() {
   useEffect(() => {
     const tmp = [];
     lights.map(l => {
-      tmp.push(<Light key={l.id} name={l.nalme} state={l.state} />);
+      tmp.push(<Light key={l.id} name={l.name} state={l.state} />);
     });
     setToRender(tmp);
   }, [lights]);

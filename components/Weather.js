@@ -3,7 +3,7 @@ import { Button, Text, View } from "react-native";
 import SocketConfig from "../constants/SocketsConfig";
 import { useSocketIO } from "react-use-websocket";
 
-export default function MyButton(props) {
+export default function Weather(props) {
   const [temperature, setTemperature] = useState("N/C");
   const [humidity, setHumidity] = useState("N/C");
   const [heatIndex, setHeatIndex] = useState("N/C");

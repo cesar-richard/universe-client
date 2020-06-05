@@ -6,6 +6,7 @@ import Lights from "../components/Lights";
 import StatusBar from "../components/StatusBar";
 import Buttons from "../components/Buttons";
 import Toggles from "../components/Toggles";
+import Weather from "../components/Weather";
 import Relays from "../components/Relays";
 import { useSocketIO } from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
@@ -32,6 +33,7 @@ export default function ControlScreen() {
           <Buttons />
           <Toggles />
           <Relays />
+          <Weather />
         </View>
         <Lights />
       </ScrollView>

@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - node
-  - lts/*
 cache:
   directories:
     - ~/.npm
@@ -14,8 +13,9 @@ addons:
 
 before_script:
   - yarn global add expo-cli
+  - yarn
 script:
-  - yarn build:web
+  - expo build:web
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_<...>_key -iv $encrypted_<...>_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d

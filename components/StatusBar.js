@@ -3,19 +3,6 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { useSocketIO } from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 
-function compare(a, b) {
-  const nodeA = a.name.toUpperCase();
-  const nodeB = b.name.toUpperCase();
-
-  let comparison = 0;
-  if (nodeA > nodeB) {
-    comparison = 1;
-  } else if (nodeA < nodeB) {
-    comparison = -1;
-  }
-  return comparison;
-}
-
 export default function() {
   const [uptimes, setUptimes] = useState([]);
   const { sendJsonMessage } = useSocketIO(SocketConfig.url, {
@@ -37,7 +24,17 @@ export default function() {
             ...uptimes.filter(({ name }) => {
               return name !== data.macAddress;
             })
-          ].sort(compare)
+          ].sort((a, b) => {
+            const nodeA = a.name.toUpperCase();
+            const nodeB = b.name.toUpperCase();
+            let comparison = 0;
+            if (nodeA > nodeB) {
+              comparison = 1;
+            } else if (nodeA < nodeB) {
+              comparison = -1;
+            }
+            return comparison;
+          })
         );
       }
     }

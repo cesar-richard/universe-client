@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --watchAll",
-    "deploy": "cd /Users/cesar/git/perso/universe/web-build && rsync -avhPR . root@crichard.fr:/var/www/universe/",
+    "deploy": "rsync -avhrP ./web-build root@crichard.fr:/var/www/universe/",
     "deploy-gh": "gh-pages -d web-build",
     "predeploy": "expo build:web"
   },

@@ -25,6 +25,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/web-build root@crichard.fr:/var/www/universe
+  script: rsync -avhPR --delete-after $TRAVIS_BUILD_DIR/web-build root@crichard.fr:/var/www/universe/
   on:
     branch: master

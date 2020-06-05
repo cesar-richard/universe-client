@@ -41,23 +41,48 @@ export default function Weather(props) {
   });
   return (
     <View style={{ flex: 1, paddingTop: "1em", flexDirection: "row" }}>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          alignItems: "center",
+          flex: 1
+        }}
+      >
         <Text>Temperature</Text>
         <Text>{temperature}°C</Text>
       </View>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          alignItems: "center",
+          flex: 1
+        }}
+      >
         <Text>Humidity</Text>
         <Text>{humidity}%</Text>
       </View>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          alignItems: "center",
+          flex: 1
+        }}
+      >
         <Text>HeatIndex</Text>
         <Text>{heatIndex}</Text>
       </View>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          alignItems: "center",
+          flex: 1
+        }}
+      >
         <Text>Dew Point</Text>
         <Text>{dewPoint}</Text>
       </View>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          alignItems: "center",
+          flex: 1
+        }}
+      >
         <Text>Comfort Status</Text>
         <Text>{comfortStatus}</Text>
       </View>

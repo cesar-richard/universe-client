@@ -12,8 +12,8 @@ addons:
   ssh_known_hosts: crichard.fr
 
 before_script:
-  - yarn global add expo-cli
-  - yarn -D
+  - yarn global add expo-cli sharp-cli
+  - yarn
 script:
   - expo build:web
 

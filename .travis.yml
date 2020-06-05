@@ -13,7 +13,7 @@ addons:
 
 before_script:
   - yarn global add expo-cli
-  - yarn
+  - yarn -D
 script:
   - expo build:web
 

@@ -3,14 +3,22 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { useSocketIO } from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 
+function compare(a, b) {
+  const nodeA = a.name.toUpperCase();
+  const nodeB = b.name.toUpperCase();
+
+  let comparison = 0;
+  if (nodeA > nodeB) {
+    comparison = 1;
+  } else if (nodeA < nodeB) {
+    comparison = -1;
+  }
+  return comparison;
+}
+
 export default function() {
   const [uptimes, setUptimes] = useState([]);
-  const {
-    sendJsonMessage,
-    lastJsonMessage,
-    readyState,
-    getWebSocket
-  } = useSocketIO(SocketConfig.url, {
+  const { sendJsonMessage } = useSocketIO(SocketConfig.url, {
     onOpen: () => console.log("opened StatusBar"),
     shouldReconnect: closeEvent => true,
     share: () => true,
@@ -18,10 +26,10 @@ export default function() {
     onClose: e => console.log,
     onMessage: event => {
       const data = JSON.parse(event.data);
-      switch (data.event) {
-        case "heartbeat":
-          const time = Math.floor(data.time / 1000);
-          setUptimes([
+      if ("heartbeat" === data.event) {
+        const time = Math.floor(data.time / 1000);
+        setUptimes(
+          [
             {
               name: data.macAddress,
               time: Math.floor(time / 60) + "min " + (time % 60) + "s"
@@ -29,14 +37,8 @@ export default function() {
             ...uptimes.filter(({ name }) => {
               return name !== data.macAddress;
             })
-          ]);
-          break;
-        case "button":
-        case "ask":
-        case "answer":
-          break;
-        default:
-          console.warn("Unknown event", data.event);
+          ].sort(compare)
+        );
       }
     }
   });

@@ -25,7 +25,7 @@ export default function Toggle(props) {
         alignSelf: "stretch"
       }}
     >
-      <Text style={{ textAlign: "center", paddingTop: "1em" }}>
+      <Text style={{ textAlign: "center" }}>
         {props.name}
       </Text>
       <Text

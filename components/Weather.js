@@ -40,7 +40,7 @@ export default function Weather(props) {
     }
   });
   return (
-    <View style={{ flex: 1, paddingTop: "1em", flexDirection: "row" }}>
+    <View style={{ flex: 1, flexDirection: "row" }}>
       <View
         style={{
           alignItems: "center",

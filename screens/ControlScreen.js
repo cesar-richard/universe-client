@@ -8,6 +8,7 @@ import Buttons from "../components/Buttons";
 import Toggles from "../components/Toggles";
 import Weather from "../components/Weather";
 import Relays from "../components/Relays";
+import Leds from "../components/Leds";
 import { useSocketIO } from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 import { MonoText } from "../components/StyledText";
@@ -29,11 +30,24 @@ export default function ControlScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        <Buttons />
-        <Toggles />
-        <Relays />
-        <Weather />
-        <Lights />
+        <View>
+          <Buttons />
+        </View>
+        <View>
+          <Toggles />
+        </View>
+        <View>
+          <Relays />
+        </View>
+        <View>
+          <Leds />
+        </View>
+        <View>
+          <Weather />
+        </View>
+        <View>
+          <Lights />
+        </View>
       </ScrollView>
       <StatusBar />
     </View>

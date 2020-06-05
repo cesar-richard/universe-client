@@ -13,10 +13,9 @@ addons:
   ssh_known_hosts: crichard.fr
 
 before_script:
-  - npm install -g npm@latest
+  - yarn global add expo-cli
 script:
-  - npm ci
-  - npx jest --ci
+  - yarn build:web
 
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_<...>_key -iv $encrypted_<...>_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d

@@ -9,9 +9,9 @@ export default function(containerRef) {
         path: "/universe/",
         screens: {
           Home: "",
-          Control: "control",
-          Links: "links",
-          Settings: "settings"
+          Control: "",
+          Links: "",
+          Settings: ""
         }
       }
     }

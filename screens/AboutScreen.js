@@ -12,7 +12,7 @@ export default function AboutScreen() {
     >
       <OptionButton
         icon="md-speedometer"
-        label="See the client GitHub repository"
+        label="See the clients GitHub repository"
         onPress={() =>
           WebBrowser.openBrowserAsync(
             "https://github.com/cesar-richard/universe-client"

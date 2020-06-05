@@ -4,7 +4,7 @@ import SocketConfig from "../constants/SocketsConfig";
 import { useSocketIO } from "react-use-websocket";
 
 export default function MyButton(props) {
-  const [relayState, setRelayState] = useState("off");
+  const [relayState, setRelayState] = useState(false);
   const { sendJsonMessage, readyState } = useSocketIO(SocketConfig.url, {
     onOpen: () => console.log("opened " + props.name + " relay"),
     share: () => true,
@@ -12,9 +12,10 @@ export default function MyButton(props) {
     onError: e => console.error,
     onClose: e => console.log,
     onMessage: e => {
-      const { event, relay, state } = JSON.parse(e.data);
-      if ("relay" === event && props.relay === relay) {
-        setRelayState(state);
+      const { action, relay, on } = JSON.parse(e.data);
+      console.log(action, relay, on);
+      if ("relay" === action && props.relay === relay) {
+        setRelayState(on);
       }
     }
   });
@@ -31,10 +32,10 @@ export default function MyButton(props) {
           fontSize: 17,
           lineHeight: 24,
           textAlign: "center",
-          backgroundColor: relayState === "on" ? "green" : "red"
+          backgroundColor: relayState ? "green" : "red"
         }}
       >
-        {relayState}
+        {relayState ? "on" : "off"}
       </Text>
       <Button
         title="Push"
@@ -42,7 +43,7 @@ export default function MyButton(props) {
           sendJsonMessage({
             action: "relay",
             relay: props.relay,
-            on: relayState === "on" ? false : true,
+            on: relayState ? false : true,
             target: props.target,
             time: Date.now()
           });

@@ -5,6 +5,7 @@ import * as WebBrowser from "expo-web-browser";
 import Lights from "../components/Lights";
 import StatusBar from "../components/StatusBar";
 import Buttons from "../components/Buttons";
+import Toggles from "../components/Toggles";
 import Relays from "../components/Relays";
 import { useSocketIO } from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
@@ -28,28 +29,9 @@ export default function ControlScreen() {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.getStartedContainer}>
-          <View
-            style={{
-              flex: 1,
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Buttons />
-          </View>
-        </View>
-        <View style={styles.getStartedContainer}>
-          <View
-            style={{
-              flex: 1,
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Relays />
-          </View>
+          <Buttons />
+          <Toggles />
+          <Relays />
         </View>
         <Lights />
       </ScrollView>

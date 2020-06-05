@@ -40,106 +40,26 @@ export default function Weather(props) {
     }
   });
   return (
-    <View
-      style={{
-        flex: 1,
-        alignSelf: "stretch"
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "stretch"
-        }}
-      >
-        <Text style={{ backgroundColor: props.color, textAlign: "center" }}>
-          Temperature
-        </Text>
-        <Text
-          style={{
-            fontSize: 17,
-            lineHeight: 24,
-            textAlign: "center"
-          }}
-        >
-          {temperature}
-        </Text>
+    <View style={{ flex: 1, paddingTop: "1em", flexDirection: "row" }}>
+      <View style={{ flex: 1 }}>
+        <Text>Temperature</Text>
+        <Text>{temperature}°C</Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "stretch"
-        }}
-      >
-        <Text style={{ backgroundColor: props.color, textAlign: "center" }}>
-          Humidity
-        </Text>
-        <Text
-          style={{
-            fontSize: 17,
-            lineHeight: 24,
-            textAlign: "center"
-          }}
-        >
-          {humidity}
-        </Text>
+      <View style={{ flex: 1 }}>
+        <Text>Humidity</Text>
+        <Text>{humidity}%</Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "stretch"
-        }}
-      >
-        <Text style={{ backgroundColor: props.color, textAlign: "center" }}>
-          HeatIndex
-        </Text>
-        <Text
-          style={{
-            fontSize: 17,
-            lineHeight: 24,
-            textAlign: "center"
-          }}
-        >
-          {heatIndex}
-        </Text>
+      <View style={{ flex: 1 }}>
+        <Text>HeatIndex</Text>
+        <Text>{heatIndex}</Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "stretch"
-        }}
-      >
-        <Text style={{ backgroundColor: props.color, textAlign: "center" }}>
-          Dew Point
-        </Text>
-        <Text
-          style={{
-            fontSize: 17,
-            lineHeight: 24,
-            textAlign: "center"
-          }}
-        >
-          {dewPoint}
-        </Text>
+      <View style={{ flex: 1 }}>
+        <Text>Dew Point</Text>
+        <Text>{dewPoint}</Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "stretch"
-        }}
-      >
-        <Text style={{ backgroundColor: props.color, textAlign: "center" }}>
-          Comfort Status
-        </Text>
-        <Text
-          style={{
-            fontSize: 17,
-            lineHeight: 24,
-            textAlign: "center"
-          }}
-        >
-          {comfortStatus}
-        </Text>
+      <View style={{ flex: 1 }}>
+        <Text>Comfort Status</Text>
+        <Text>{comfortStatus}</Text>
       </View>
     </View>
   );

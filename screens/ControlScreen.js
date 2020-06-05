@@ -29,12 +29,10 @@ export default function ControlScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        <View style={styles.getStartedContainer}>
-          <Buttons />
-          <Toggles />
-          <Relays />
-          <Weather />
-        </View>
+        <Buttons />
+        <Toggles />
+        <Relays />
+        <Weather />
         <Lights />
       </ScrollView>
       <StatusBar />

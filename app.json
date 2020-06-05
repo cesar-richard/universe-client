@@ -3,7 +3,6 @@
     "name": "Universe",
     "slug": "universe",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "android",
       "web"

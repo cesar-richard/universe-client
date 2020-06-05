@@ -3,12 +3,12 @@ import { Linking } from "expo";
 
 export default function(containerRef) {
   return useLinking(containerRef, {
-    prefixes: [Linking.makeUrl("/")],
+    prefixes: [Linking.makeUrl("/universe/")],
     config: {
       Root: {
-        path: "root",
+        path: "/universe/",
         screens: {
-          Home: "home",
+          Home: "",
           Control: "control",
           Links: "links",
           Settings: "settings"

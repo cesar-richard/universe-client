@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
-import { RectButton, ScrollView } from "react-native-gesture-handler";
+import { RectButton, ScrollView, Text } from "react-native-gesture-handler";
 
 export default function AboutScreen() {
   return (
@@ -12,7 +12,7 @@ export default function AboutScreen() {
     >
       <OptionButton
         icon="md-speedometer"
-        label="See the clients GitHub repository"
+        label="See the client GitHub repository"
         onPress={() =>
           WebBrowser.openBrowserAsync(
             "https://github.com/cesar-richard/universe-client"
@@ -30,10 +30,10 @@ export default function AboutScreen() {
       />
       <OptionButton
         icon="md-bug"
-        label="See the NodeMCU GitHub repository"
+        label="See the MCU nodes GitHub repository"
         onPress={() =>
           WebBrowser.openBrowserAsync(
-            "https://github.com/cesar-richard/universe"
+            "https://github.com/cesar-richard/universe-mcu"
           )
         }
       />

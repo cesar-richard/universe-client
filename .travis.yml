@@ -13,7 +13,6 @@ addons:
 
 before_script:
   - yarn global add expo-cli sharp-cli
-  - yarn
 script:
   - expo build:web
 
@@ -25,6 +24,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -avhrP --delete-after $TRAVIS_BUILD_DIR/web-build root@crichard.fr:/var/www/universe/
+  script: rsync -avhrP --delete-after $TRAVIS_BUILD_DIR/web-build/** root@crichard.fr:/var/www/universe/
   on:
     branch: master

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
 import SocketConfig from "../constants/SocketsConfig";
-import { useSocketIO } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 
 export default function Led(props) {
   const [ledState, setLedState] = useState(false);
-  const { sendJsonMessage, readyState } = useSocketIO(SocketConfig.url, {
+  const { sendJsonMessage, readyState } = useWebSocket(SocketConfig.url, {
     onOpen: () => console.log("opened " + props.name + " led"),
     share: () => true,
     shouldReconnect: closeEvent => true,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
-import { useSocketIO } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 import Light from "./Light";
 
@@ -15,7 +15,7 @@ export default function Lights() {
     lastJsonMessage,
     readyState,
     getWebSocket
-  } = useSocketIO(SocketConfig.url, {
+  } = useWebSocket(SocketConfig.url, {
     onOpen: () => console.log("opened Lights"),
     share: () => true,
     shouldReconnect: closeEvent => true,

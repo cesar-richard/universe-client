@@ -25,7 +25,7 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
 deploy:
   provider: script
-  cleanup: false
+  skip_cleanup: true
   script: rsync -avhrP --delete-after $TRAVIS_BUILD_DIR/web-build/** root@crichard.fr:/var/www/universe/
   on:
     branch: master

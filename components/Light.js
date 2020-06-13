@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
-import { useSocketIO } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 
 export default function Light(props) {

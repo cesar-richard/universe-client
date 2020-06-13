@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { useSocketIO } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 
 export default function() {
   const [uptimes, setUptimes] = useState([]);
-  const { sendJsonMessage } = useSocketIO(SocketConfig.url, {
+  const { sendJsonMessage } = useWebSocket(SocketConfig.url, {
     onOpen: () => console.log("opened StatusBar"),
     shouldReconnect: closeEvent => true,
     share: () => true,

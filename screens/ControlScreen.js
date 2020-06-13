@@ -9,21 +9,9 @@ import Toggles from "../components/Toggles";
 import Weather from "../components/Weather";
 import Relays from "../components/Relays";
 import Leds from "../components/Leds";
-import { useSocketIO } from "react-use-websocket";
-import SocketConfig from "../constants/SocketsConfig";
 import { MonoText } from "../components/StyledText";
 
 export default function ControlScreen() {
-  const { sendJsonMessage, readyState } = useSocketIO(SocketConfig.url, {
-    onOpen: () => console.log("opened ControlScreen"),
-    share: () => true,
-    shouldReconnect: closeEvent => true,
-    onError: e => console.error,
-    onClose: e => console.log,
-    onMessage: event => {
-      const data = JSON.parse(event.data);
-    }
-  });
   return (
     <View style={styles.container}>
       <ScrollView

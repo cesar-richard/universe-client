@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
 import SocketConfig from "../constants/SocketsConfig";
-import { useSocketIO } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 
 export default function Weather(props) {
   const [temperature, setTemperature] = useState("N/C");
@@ -10,7 +10,7 @@ export default function Weather(props) {
   const [dewPoint, setDewPoint] = useState("N/C");
   const [comfortStatus, setComfortStatus] = useState("N/C");
 
-  const { sendJsonMessage, readyState } = useSocketIO(SocketConfig.url, {
+  const { sendJsonMessage, readyState } = useWebSocket(SocketConfig.url, {
     onOpen: () => console.log("opened weather"),
     share: () => true,
     shouldReconnect: closeEvent => true,

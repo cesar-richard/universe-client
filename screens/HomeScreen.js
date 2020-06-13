@@ -5,7 +5,7 @@ import * as WebBrowser from "expo-web-browser";
 import Lights from "../components/Lights";
 import StatusBar from "../components/StatusBar";
 import Buttons from "../components/Buttons";
-import { useSocketIO } from "react-use-websocket";
+import useWebSocket from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 import { MonoText } from "../components/StyledText";
 
@@ -21,7 +21,7 @@ export default function HomeScreen() {
     lastJsonMessage,
     readyState,
     getWebSocket
-  } = useSocketIO(SocketConfig.url, {
+  } = useWebSocket(SocketConfig.url, {
     onOpen: () => console.log("opened HomeScreen"),
     share: () => true,
     shouldReconnect: closeEvent => true,
@@ -51,15 +51,10 @@ export default function HomeScreen() {
               setBtnYellow(data.state);
               break;
             default:
-              console.warn("Unknown sensor", data.sensor);
+              console.warn(`Unknown button : ${data.sensor}`);
           }
-          break;
-        case "heartbeat":
-        case "ask":
-        case "answer":
-          break;
         default:
-          console.warn("Unknown event", data.event);
+          break;
       }
     }
   });

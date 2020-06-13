@@ -12,8 +12,8 @@ export default function Led(props) {
     onError: e => console.error,
     onClose: e => console.log,
     onMessage: e => {
-      const { action, led, on } = JSON.parse(e.data);
-      if ("led" === action && props.led === led) {
+      const { action, led, on, target } = JSON.parse(e.data);
+      if ("led" === action && props.led === led && props.target === target) {
         setLedState(on);
       }
     }

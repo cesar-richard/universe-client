@@ -1,3 +1,5 @@
+os: linux
+dist: xenial
 language: node_js
 node_js:
   - node
@@ -23,7 +25,7 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
 deploy:
   provider: script
-  skip_cleanup: true
+  cleanup: false
   script: rsync -avhrP --delete-after $TRAVIS_BUILD_DIR/web-build/** root@crichard.fr:/var/www/universe/
   on:
     branch: master

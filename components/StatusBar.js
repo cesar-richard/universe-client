@@ -15,27 +15,26 @@ export default function() {
       const data = JSON.parse(event.data);
       if ("heartbeat" === data.event) {
         const time = Math.floor(data.time / 1000);
-        setUptimes(
-          [
-            {
-              name: data.macAddress,
-              time: Math.floor(time / 60) + "min " + (time % 60) + "s"
-            },
-            ...uptimes.filter(({ name }) => {
-              return name !== data.macAddress;
-            })
-          ].sort((a, b) => {
-            const nodeA = a.name.toUpperCase();
-            const nodeB = b.name.toUpperCase();
-            let comparison = 0;
-            if (nodeA > nodeB) {
-              comparison = 1;
-            } else if (nodeA < nodeB) {
-              comparison = -1;
-            }
-            return comparison;
+        let test = [
+          {
+            name: data.macAddress,
+            time: Math.floor(time / 60) + "min " + (time % 60) + "s"
+          },
+          ...uptimes.filter(({ name }) => {
+            return name !== data.macAddress;
           })
-        );
+        ].sort((a, b) => {
+          const nodeA = a.name.toUpperCase();
+          const nodeB = b.name.toUpperCase();
+          let comparison = 0;
+          if (nodeA > nodeB) {
+            comparison = 1;
+          } else if (nodeA < nodeB) {
+            comparison = -1;
+          }
+          return comparison;
+        });
+        setUptimes(test);
       }
     }
   });
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
     }),
     alignItems: "center",
     backgroundColor: "#fbfbfb",
-    paddingVertical: 20
+    paddingVertical: 10
   },
   tabBarInfoText: {
     fontSize: 17,

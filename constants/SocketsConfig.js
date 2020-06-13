@@ -1,3 +1,3 @@
 export default {
-  url: "ws://192.168.1.29:3000/"
+  url: "ws://universe-server.crichard.fr:3657/"
 };

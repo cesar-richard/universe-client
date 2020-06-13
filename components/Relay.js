@@ -13,7 +13,6 @@ export default function MyButton(props) {
     onClose: e => console.log,
     onMessage: e => {
       const { action, relay, on } = JSON.parse(e.data);
-      console.log(action, relay, on);
       if ("relay" === action && props.relay === relay) {
         setRelayState(on);
       }

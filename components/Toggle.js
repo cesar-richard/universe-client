@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import Switch from "react-switch";
 import SocketConfig from "../constants/SocketsConfig";
 import useWebSocket from "react-use-websocket";
 
@@ -25,19 +26,16 @@ export default function Toggle(props) {
         alignSelf: "stretch"
       }}
     >
-      <Text style={{ textAlign: "center" }}>
-        {props.name}
-      </Text>
-      <Text
-        style={{
-          fontSize: 17,
-          lineHeight: 24,
-          textAlign: "center",
-          backgroundColor: btnState === "on" ? "green" : "red"
-        }}
-      >
-        {btnState}
-      </Text>
+      <label htmlFor="disabled-switch">
+        <Text style={{ textAlign: "center" }}>{props.name}</Text>
+        <Switch
+          onChange={() => {}}
+          checked={btnState === "on"}
+          disabled
+          className="react-switch"
+          id="disabled-switch"
+        />
+      </label>
     </View>
   );
 }

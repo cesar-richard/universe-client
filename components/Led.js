@@ -13,7 +13,6 @@ export default function Led(props) {
     onClose: e => console.log,
     onMessage: e => {
       const { action, led, on } = JSON.parse(e.data);
-      console.log(action, led, on);
       if ("led" === action && props.led === led) {
         setLedState(on);
       }

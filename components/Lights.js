@@ -16,7 +16,10 @@ export default function Lights() {
     readyState,
     getWebSocket
   } = useWebSocket(SocketConfig.url, {
-    onOpen: () => console.log("opened Lights"),
+    onOpen: () => {
+      console.log("opened Lights");
+      sendJsonMessage({ event: "ask", sensor: "universe", state: "lights" });
+    },
     share: () => true,
     shouldReconnect: closeEvent => true,
     onError: e => console.error,
@@ -28,12 +31,6 @@ export default function Lights() {
       }
     }
   });
-
-  useEffect(
-    () =>
-      sendJsonMessage({ event: "ask", sensor: "universe", state: "lights" }),
-    []
-  );
 
   useEffect(() => {
     const tmp = [];

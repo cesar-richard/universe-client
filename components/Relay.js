@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
+import Switch from "react-switch";
 import SocketConfig from "../constants/SocketsConfig";
 import useWebSocket from "react-use-websocket";
 
@@ -22,31 +23,22 @@ export default function MyButton(props) {
     <View
       style={{
         flex: 1,
-        alignSelf: "stretch"
+        alignSelf: "stretch",
+        alignItems: "center"
       }}
     >
       <Text style={{ textAlign: "center" }}>{props.name}</Text>
-      <Text
-        style={{
-          fontSize: 17,
-          lineHeight: 24,
-          textAlign: "center",
-          backgroundColor: relayState ? "green" : "red"
-        }}
-      >
-        {relayState ? "on" : "off"}
-      </Text>
-      <Button
-        title="Push"
-        onPress={() => {
+      <Switch
+        onChange={v => {
           sendJsonMessage({
             action: "relay",
             relay: props.relay,
-            on: relayState ? false : true,
+            on: !relayState,
             target: props.target,
             time: Date.now()
           });
         }}
+        checked={relayState}
       />
     </View>
   );

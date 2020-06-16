@@ -8,7 +8,7 @@ export default function Buttons(props) {
       {[
         { name: "Bulb", relay: 1, target: "A4:CF:12:24:56:0C" },
         { name: "Plants line", relay: 2, target: "A4:CF:12:24:56:0C" },
-        { name: "Plant square", relay: 3, target: "A4:CF:12:24:56:0C" }
+        { name: "Plant square", relay: 3, target: "A4:CF:12:24:56:0C" },
         { name: "Pump", relay: 4, target: "A4:CF:12:24:56:0C" }
       ].map(e => (
         <Relay

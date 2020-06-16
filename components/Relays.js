@@ -7,8 +7,9 @@ export default function Buttons(props) {
     <View style={{ flex: 1, alignSelf: "stretch", flexDirection: "row" }}>
       {[
         { name: "Bulb", relay: 1, target: "A4:CF:12:24:56:0C" },
-        { name: "Strip", relay: 2, target: "A4:CF:12:24:56:0C" },
-        { name: "Plants", relay: 3, target: "A4:CF:12:24:56:0C" }
+        { name: "Plants line", relay: 2, target: "A4:CF:12:24:56:0C" },
+        { name: "Plant square", relay: 3, target: "A4:CF:12:24:56:0C" },
+        { name: "Pump", relay: 4, target: "A4:CF:12:24:56:0C" }
       ].map(e => (
         <Relay
           key={"relay_" + e.name}

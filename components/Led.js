@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Text, View } from "react-native";
+import Switch from "react-switch";
 import SocketConfig from "../constants/SocketsConfig";
 import useWebSocket from "react-use-websocket";
 
@@ -22,33 +23,24 @@ export default function Led(props) {
     <View
       style={{
         flex: 1,
-        alignSelf: "stretch"
+        alignSelf: "stretch",
+        alignItems: "center"
       }}
     >
       <Text style={{ backgroundColor: props.led, textAlign: "center" }}>
         {props.name}
       </Text>
-      <Text
-        style={{
-          fontSize: 17,
-          lineHeight: 24,
-          textAlign: "center",
-          backgroundColor: ledState ? "green" : "red"
-        }}
-      >
-        {ledState ? "on" : "off"}
-      </Text>
-      <Button
-        title="Push"
-        onPress={() => {
+      <Switch
+        onChange={v => {
           sendJsonMessage({
             action: "led",
             led: props.led,
-            on: ledState ? false : true,
+            on: v,
             target: props.target,
             time: Date.now()
           });
         }}
+        checked={ledState}
       />
     </View>
   );

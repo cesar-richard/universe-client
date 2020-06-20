@@ -14,6 +14,7 @@ export default function Toggle(props) {
     onClose: e => console.log,
     onMessage: e => {
       const { event, sensor, state } = JSON.parse(e.data);
+      console.log(JSON.parse(e.data));
       if ("button" === event && props.sensor === sensor) {
         setBtnState(state);
       }
@@ -23,19 +24,12 @@ export default function Toggle(props) {
     <View
       style={{
         flex: 1,
-        alignSelf: "stretch"
+        alignSelf: "stretch",
+        alignItems: "center"
       }}
     >
-      <label htmlFor="disabled-switch">
-        <Text style={{ textAlign: "center" }}>{props.name}</Text>
-        <Switch
-          onChange={() => {}}
-          checked={btnState === "on"}
-          disabled
-          className="react-switch"
-          id="disabled-switch"
-        />
-      </label>
+      <Text style={{ textAlign: "center" }}>{props.name}</Text>
+      <Switch onChange={() => {}} checked={btnState === "on"} disabled />
     </View>
   );
 }

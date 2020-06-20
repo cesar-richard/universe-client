@@ -18,9 +18,6 @@ export default function HomeScreen() {
         contentContainerStyle={styles.contentContainer}
       >
         <Pump />
-        <Pump counterClockWise />
-        <Pump active />
-        <Pump active counterClockWise />
       </ScrollView>
       <StatusBar />
     </View>

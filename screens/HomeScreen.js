@@ -8,7 +8,7 @@ import Buttons from "../components/Buttons";
 import useWebSocket from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
 import { MonoText } from "../components/StyledText";
-import Pump from "../components/Pump";
+import Pumps from "../components/Pumps";
 
 export default function HomeScreen() {
   return (
@@ -17,7 +17,7 @@ export default function HomeScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        <Pump />
+        <Pumps />
       </ScrollView>
       <StatusBar />
     </View>

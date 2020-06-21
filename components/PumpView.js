@@ -12,13 +12,13 @@ export default function PumpView({ active, clockWise }) {
     animatedValue.setValue(0);
     Animated.timing(animatedValue, {
       toValue: 1,
-      duration: 1500,
+      duration: 150,
       easing: Easing.linear
     }).start(() => startAnimation());
   };
   const interpolateRotation = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: clockWise ? ["360deg", "0deg"] : ["0deg", "360deg"]
+    outputRange: clockWise ? ["0deg", "60deg"] : ["60deg", "0deg"]
   });
 
   const styles = StyleSheet.create({

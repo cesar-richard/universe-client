@@ -16,15 +16,23 @@ export default function() {
       const data = JSON.parse(event.data);
       if ("heartbeat" === data.event) {
         const time = Math.floor(data.time / 1000);
-        let test = [
+        setUptimes([
           {
             name: nodeNameByMac(data.macAddress),
             time: Math.floor(time / 60) + "min " + (time % 60) + "s"
           },
           ...uptimes.filter(({ name }) => {
-            return name !== data.macAddress;
+            return name !== nodeNameByMac(data.macAddress);
           })
-        ].sort((a, b) => {
+        ]);
+      }
+    }
+  });
+
+  return (
+    <View style={styles.tabBarInfoContainer}>
+      {uptimes
+        .sort((a, b) => {
           const nodeA = a.name.toUpperCase();
           const nodeB = b.name.toUpperCase();
           let comparison = 0;
@@ -34,19 +42,12 @@ export default function() {
             comparison = -1;
           }
           return comparison;
-        });
-        setUptimes(test);
-      }
-    }
-  });
-
-  return (
-    <View style={styles.tabBarInfoContainer}>
-      {uptimes.map(e => (
-        <Text style={styles.tabBarInfoText} key={e.name}>
-          {e.name}:{e.time}
-        </Text>
-      ))}
+        })
+        .map(e => (
+          <Text style={styles.tabBarInfoText} key={e.name}>
+            {e.name}:{e.time}
+          </Text>
+        ))}
     </View>
   );
 }

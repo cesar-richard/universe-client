@@ -24,6 +24,41 @@ export default function Pump({ name, relayPositive, relayNegative, target }) {
       }
     }
   });
+
+  React.useEffect(() => {
+    if (!active) {
+      sendJsonMessage({
+        action: "relay",
+        relay: relayNegative,
+        on: false,
+        target,
+        time: Date.now()
+      });
+      sendJsonMessage({
+        action: "relay",
+        relay: relayPositive,
+        on: false,
+        target,
+        time: Date.now()
+      });
+    } else {
+      sendJsonMessage({
+        action: "relay",
+        relay: relayNegative,
+        on: !clockWise,
+        target,
+        time: Date.now()
+      });
+      sendJsonMessage({
+        action: "relay",
+        relay: relayPositive,
+        on: clockWise,
+        target,
+        time: Date.now()
+      });
+    }
+  }, [active, clockWise]);
+
   return (
     <View
       style={{

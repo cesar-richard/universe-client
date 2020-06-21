@@ -5,7 +5,8 @@ import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import SocketConfig from "./constants/SocketsConfig";
+import useWebSocket from "react-use-websocket";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 
@@ -16,6 +17,19 @@ export default function App(props) {
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
+  const { sendJsonMessage, readyState } = useWebSocket(SocketConfig.url, {
+    onOpen: () =>
+      sendJsonMessage({
+        action: "getstatus",
+        sensor: "all",
+        time: Date.now()
+      }),
+    share: () => true,
+    shouldReconnect: closeEvent => true,
+    onError: e => console.error,
+    onClose: e => console.log,
+    onMessage: e => {}
+  });
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {

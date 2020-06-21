@@ -1,64 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Text, View, StyleSheet, Animated, Easing } from "react-native";
+import Switch from "react-switch";
+import SocketConfig from "../constants/SocketsConfig";
+import useWebSocket from "react-use-websocket";
 
-import PumpCoreSVG from "../assets/images/PumpCoreSVG";
-import PumpRotorSVG from "../assets/images/PumpRotorSVG";
-import styled from "styled-components/native";
+import PumpView from "./PumpView";
 
-export default function Pump({ active, counterClockWise }) {
-  const animatedValue = new Animated.Value(1);
-  const startAnimation = () => {
-    animatedValue.setValue(0);
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 1500,
-      easing: Easing.linear
-    }).start(() => startAnimation());
-  };
-  const interpolateRotation = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: counterClockWise ? ["360deg", "0deg"] : ["0deg", "360deg"]
-  });
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignSelf: "stretch",
-      height: "2em",
-      justifyContent: "center",
-      alignItems: "center"
+export default function Pump({ name, relayPositive, relayNegative, target }) {
+  const [active, setActive] = useState(false);
+  const [clockWise, setClockWise] = useState(true);
+  const { sendJsonMessage, readyState } = useWebSocket(SocketConfig.url, {
+    onOpen: () => console.log("opened " + name + " pump"),
+    share: () => true,
+    shouldReconnect: closeEvent => true,
+    onError: e => console.error,
+    onClose: e => console.log,
+    onMessage: e => {
+      const { action: a, name: n, on: o, clockWise: c } = JSON.parse(e.data);
+      if ("pump" === a && name === n) {
+        setActive(o);
+        setClockWise(c);
+      }
     }
   });
-  if (active) startAnimation();
+
+  React.useEffect(() => {
+    if (!active) {
+      sendJsonMessage({
+        action: "relay",
+        relay: relayNegative,
+        on: false,
+        target,
+        time: Date.now()
+      });
+      sendJsonMessage({
+        action: "relay",
+        relay: relayPositive,
+        on: false,
+        target,
+        time: Date.now()
+      });
+    } else {
+      sendJsonMessage({
+        action: "relay",
+        relay: relayNegative,
+        on: !clockWise,
+        target,
+        time: Date.now()
+      });
+      sendJsonMessage({
+        action: "relay",
+        relay: relayPositive,
+        on: clockWise,
+        target,
+        time: Date.now()
+      });
+    }
+  }, [active, clockWise]);
+
   return (
-    <View style={styles.container}>
-      <View>
-        <PumpCoreSVG />
-        <Animated.View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            transform: [{ rotate: interpolateRotation }],
-            transformOrigin: "52.5% 51%"
-          }}
-        >
-          <PumpRotorSVG />
-        </Animated.View>
-      </View>
+    <View
+      style={{
+        flex: 1,
+        alignSelf: "stretch",
+        alignItems: "center"
+      }}
+    >
+      <Text style={{ textAlign: "center" }}>{name}</Text>
+      <Switch
+        onChange={v => {
+          sendJsonMessage({
+            action: "pump",
+            name,
+            on: v,
+            clockWise,
+            target,
+            time: Date.now()
+          });
+        }}
+        checked={active}
+      />
+      <Switch
+        onChange={v => {
+          sendJsonMessage({
+            action: "pump",
+            name,
+            on: active,
+            clockWise: v,
+            target,
+            time: Date.now()
+          });
+          setClockWise(v);
+        }}
+        checked={clockWise}
+        checkedIcon={<>💦</>}
+        uncheckedIcon={<>🔞</>}
+      />
+      <PumpView active={active} clockWise={clockWise} />
     </View>
   );
-
-  // return <StyledLogo />;
 }
 
 Pump.protoTypes = {
-  active: PropTypes.bool,
-  counterClockWise: PropTypes.bool
-};
-
-Pump.defaultProps = {
-  active: false,
-  counterClockWise: false
+  name: PropTypes.string.isRequired,
+  relayPositive: PropTypes.number.isRequired,
+  relayNegative: PropTypes.number.isRequired,
+  target: PropTypes.string.isRequired
 };

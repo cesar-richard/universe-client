@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { nodeNameByMac } from "../constants/Nodes";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import useWebSocket from "react-use-websocket";
 import SocketConfig from "../constants/SocketsConfig";
@@ -17,7 +18,7 @@ export default function() {
         const time = Math.floor(data.time / 1000);
         let test = [
           {
-            name: data.macAddress,
+            name: nodeNameByMac(data.macAddress),
             time: Math.floor(time / 60) + "min " + (time % 60) + "s"
           },
           ...uptimes.filter(({ name }) => {

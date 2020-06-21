@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View } from "react-native";
+import { nodeMacByName } from "../constants/Nodes";
 
 import Pump from "./Pump";
 
@@ -12,7 +13,7 @@ export default function Pumps() {
           name: "Watering",
           relayPositive: 4,
           relayNegative: 5,
-          target: "A4:CF:12:24:56:0C"
+          target: nodeMacByName("Relays")
         }
       ].map(e => (
         <Pump

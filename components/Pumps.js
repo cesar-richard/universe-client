@@ -18,7 +18,8 @@ export default function Pumps() {
       ].map(e => (
         <Pump
           key={"pump_" + e.name}
-          relay={e.relay}
+          relayPositive={e.relayPositive}
+          relayNegative={e.relayNegative}
           name={e.name}
           target={e.target}
         />

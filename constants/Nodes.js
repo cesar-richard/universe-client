@@ -1,5 +1,7 @@
 const nodes = {
-  "A4:CF:12:24:56:0C": "Relays"
+  "A4:CF:12:24:56:0C": "Relays",
+  "24:6F:28:10:93:98": "Controls",
+  "24:6F:28:10:61:28": "Weather"
 };
 export default nodes;
 export function nodeNameByMac(macAddress) {

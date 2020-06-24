@@ -11,7 +11,7 @@ export default function Pumps() {
       {[
         {
           name: "Watering",
-          relayPositive: 4,
+          relayPositive: 6,
           relayNegative: 5,
           target: nodeMacByName("Relays")
         }

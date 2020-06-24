@@ -10,8 +10,9 @@ export default function Buttons(props) {
         { name: "Light bulbs", relay: 1, target: nodeMacByName("Relays") },
         { name: "Plants Low", relay: 2, target: nodeMacByName("Relays") },
         { name: "Plant High", relay: 3, target: nodeMacByName("Relays") },
-        { name: "Pump Positive", relay: 4, target: nodeMacByName("Relays") },
-        { name: "Pump Negative", relay: 5, target: nodeMacByName("Relays") }
+        { name: "Unused", relay: 4, target: nodeMacByName("Relays") },
+        { name: "Pump Negative", relay: 5, target: nodeMacByName("Relays") },
+        { name: "Pump Positive", relay: 6, target: nodeMacByName("Relays") }
       ].map(e => (
         <Relay
           key={"relay_" + e.name}

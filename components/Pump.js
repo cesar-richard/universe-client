@@ -45,14 +45,14 @@ export default function Pump({ name, relayPositive, relayNegative, target }) {
       sendJsonMessage({
         action: "relay",
         relay: relayNegative,
-        on: !clockWise,
+        on: clockWise,
         target,
         time: Date.now()
       });
       sendJsonMessage({
         action: "relay",
         relay: relayPositive,
-        on: clockWise,
+        on: !clockWise,
         target,
         time: Date.now()
       });
